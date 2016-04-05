@@ -16,7 +16,8 @@ def read_log(fp):
         line = line.strip().split()
 
         # reading time
-        line[1] = line[1][:line[1].index(".")]
+        try : line[1] = line[1][:line[1].index(".")]
+        except: pass
         date = datetime.datetime.strptime(line[0] + " " + line[1], "%Y-%m-%d %H:%M:%S")
 
         # reading type

@@ -9,5 +9,4 @@ LOG=$ROOT/log/$experiment
 SEED=1300487
 BLEU_EVALUATOR=~/tools/mosesdecoder/scripts/generic/multi-bleu.perl
 
-decoder_options="--eos_disc 0 --verbose"
 

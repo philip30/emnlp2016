@@ -15,11 +15,13 @@ else
     gpu="--gpu $gpu"
 fi
 
+decoder_options="--eos_disc 0.3 --verbose"
+
 # options
 ### Start ####
 mkdir -p $TEST
 
-for model in attn encdec dictattn; do
+for model in attn dictattn; do
 for hidden in 256; do
 for depth in 1; do
     data=$DATA/$experiment

@@ -23,7 +23,7 @@ mkdir -p $MODEL_OUT
 
 unk_cut="--unk_cut 3"
 
-for model in dictattn attn encdec; do
+for model in attn; do
 for hidden in 256; do
 for depth in 1; do
     src_train=$DATA/kftt/kyoto-train.cln.en

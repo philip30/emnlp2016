@@ -1,6 +1,6 @@
 model_out=$MODEL_OUT/${name}
 train_log=$LOG/${name}.log
-options="--hidden $hidden --epoch $EPOCH --embed $hidden --seed $SEED --batch $BATCH_SIZE $gpu $unk_cut --save_models"    
+options="--hidden $hidden --epoch $EPOCH --embed $hidden --seed $SEED --batch $BATCH_SIZE $gpu $unk_cut --save_models init_model"    
 
 # Dict
 if [ $model = "dictattn" ]; then
