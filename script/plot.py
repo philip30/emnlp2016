@@ -23,11 +23,15 @@ for i in range(len(args.input)):
         name = name[:name.index(".")]
         for i, line in enumerate(fp):
             line = line.strip().split()
-            bleu_arr.append(float(line[4][:len(line[4])-1]))
+            
             if args.mode == "epoch":
+                bleu_arr.append(float(line[4][:len(line[4])-1]))
                 time_arr.append(i+1)
             else:
-                time_arr.append(float(line[-1]))
+                time = float(line[-1])
+                if args.cut_time and args.cut_time >= time:
+                    bleu_arr.append(float(line[4][:len(line[4])-1]))
+                    time_arr.append(float(line[-1]))
         data.append((name, bleu_arr, time_arr))
 
 for name, bleu, time in data:

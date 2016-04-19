@@ -18,19 +18,27 @@ else
 fi
 ###########
 
+DEV="--src_dev $DATA/kftt/kyoto-dev.en --trg_dev $DATA/kftt/kyoto-dev.ja"
+
 mkdir -p $LOG
 mkdir -p $MODEL_OUT
 
-unk_cut="--unk_cut 3"
+unk_cut="--unk_cut 2"
 
-for model in attn; do
+for model in dictattn; do
 for hidden in 256; do
 for depth in 1; do
+for epoch in 20; do
+for BATCH_SIZE in 64; do
     src_train=$DATA/kftt/kyoto-train.cln.en
     trg_train=$DATA/kftt/kyoto-train.cln.ja
     name=$model-h${hidden}-d${depth}
+    if [ $model = "dictattn" ] && [ $DICT_METHOD = "bias" ]; then
+        name=${model}_bias-h${hidden}-d${depth}
+    fi
     source script/bash/training.sh
 done
 done
 done
-
+done
+done

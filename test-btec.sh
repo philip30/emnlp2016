@@ -15,19 +15,23 @@ else
     gpu="--gpu $gpu"
 fi
 
-decoder_options="--eos_disc 0.2 --verbose"
+decoder_options="--verbose"
 
 # options
 ### Start ####
 mkdir -p $TEST
 
-for split in 002 004 008 016 032 064 128; do
-for model in attn dictattn; do
-for hidden in 1024 512 256; do
-for depth in 2 1; do
+for split in 001 002 004 008 016 032 064 128; do
+for model in dictattn; do
+for hidden in 256; do
+for depth in 1; do
+for epoch in 40; do
     data=$DATA/$experiment
     name=$model-h${hidden}-d${depth}-$split
-    model_out=$MODEL_OUT/${name}/model
+    if [ $model = "dictattn" ] && [ $DICT_METHOD = "bias" ]; then
+        name=${model}_bias-h${hidden}-d${depth}-$split
+    fi
+    model_out=$MODEL_OUT/${name}/model  
     if [ -e $MODEL_OUT/$name ]; then
         mkdir -p $TEST/$name
         source script/bash/testing.sh
@@ -36,4 +40,4 @@ done
 done
 done
 done
-
+done

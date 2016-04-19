@@ -1,10 +1,10 @@
 model_out=$MODEL_OUT/${name}
 train_log=$LOG/${name}.log
-options="--hidden $hidden --epoch $EPOCH --embed $hidden --seed $SEED --batch $BATCH_SIZE $gpu $unk_cut --save_models init_model"    
+options="--hidden $hidden --epoch $epoch --embed $hidden --seed $SEED --batch $BATCH_SIZE $gpu $unk_cut --save_models --dropout $DROPOUT"    
 
 # Dict
 if [ $model = "dictattn" ]; then
-    options="$options --dict $DICT --dict_caching"
+    options="$options --dict $DICT --dict_caching --dict_method $DICT_METHOD $DEV"
 fi
 
 mkdir -p $model_out

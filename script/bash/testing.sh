@@ -1,6 +1,12 @@
 # Testing
-script/calculate-time.py $LOG/${name}.log $TEST/$name
-for (( tc=0; tc < $EPOCH; tc++ )) do
+if [ -d ${TEST}/$name ]; then
+    rm -rf ${TEST}/$name
+fi
+
+mkdir -p ${TEST}/$name
+
+python3 script/calculate-time.py $LOG/${name}.log $TEST/$name
+for (( tc=0; tc < $epoch; tc++ )) do
     if [ -e ${model_out}-$tc ]; then
         echo "Testing $name, epoch: $tc"
         test_name=$TEST/$name/test-$tc
@@ -9,4 +15,4 @@ for (( tc=0; tc < $EPOCH; tc++ )) do
     fi
 done
 
-bash script/progress-bleu.sh $TEST/$name > $TEST/$name/test.report
+source script/progress-bleu.sh $TEST/$name > $TEST/$name/test.report

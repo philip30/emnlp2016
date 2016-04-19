@@ -17,7 +17,7 @@ def read_log(fp):
 
         # reading time
         try : line[1] = line[1][:line[1].index(".")]
-        except: pass
+        except: continue
         date = datetime.datetime.strptime(line[0] + " " + line[1], "%Y-%m-%d %H:%M:%S")
 
         # reading type
@@ -26,7 +26,7 @@ def read_log(fp):
                 ret.append(data)
             data = (int(line[-1]), date, [])
         else:
-            if data is not None:
+            if data is not None and line[3].startswith("Trained"):
                 data[2].append(date)
     ret.append(data)
     return ret
