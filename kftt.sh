@@ -3,7 +3,7 @@
 set -e
 set -o xtrace
 
-experiment=btec
+experiment=kftt
 
 source script/bash/config.sh
 source script/bash/hyper-param.sh
@@ -35,8 +35,8 @@ for (( ep=$start_epoch; ep < $max_epoch; ep++ )); do
 for model in attn dictattn; do
 for hidden in 256; do
 for depth in 1; do
-    src_train=$DATA/btec/train-${split}.clean.en
-    trg_train=$DATA/btec/train-${split}.clean.ja
+    src_train=$DATA/kftt/kyoto-train.cln.en
+    trg_train=$DATA/kftt/kyoto-train.cln.ja
     name=$model-h${hidden}-d${depth}
     if [ $model = "dictattn" ]; then
         for DICT_METHOD in bias linear; do
