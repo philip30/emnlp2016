@@ -9,4 +9,4 @@ LOG=$ROOT/log/$experiment
 SEED=1300487
 BLEU_EVALUATOR=~/tools/mosesdecoder/scripts/generic/multi-bleu.perl
 
-DICT_METHOD=bias
+echo PID: $$

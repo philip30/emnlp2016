@@ -19,6 +19,7 @@ for i in range(len(args.input)):
     with open(name) as fp:
         bleu_arr = []
         time_arr = []
+        time = 0
         name = name.split("/")[-1]
         name = name[:name.index(".")]
         for i, line in enumerate(fp):
@@ -28,10 +29,10 @@ for i in range(len(args.input)):
                 bleu_arr.append(float(line[4][:len(line[4])-1]))
                 time_arr.append(i+1)
             else:
-                time = float(line[-1])
+                time += float(line[-1])
                 if args.cut_time and args.cut_time >= time:
                     bleu_arr.append(float(line[4][:len(line[4])-1]))
-                    time_arr.append(float(line[-1]))
+                    time_arr.append(time)
         data.append((name, bleu_arr, time_arr))
 
 for name, bleu, time in data:

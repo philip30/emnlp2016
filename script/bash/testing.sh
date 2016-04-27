@@ -1,18 +1,24 @@
 # Testing
-if [ -d ${TEST}/$name ]; then
-    rm -rf ${TEST}/$name
+data=$DATA/$experiment
+
+# Directory
+if [ $ep -eq 0 ]; then
+    [ -d ${TEST}/$name ] && rm -rf ${TEST}/$name
+    mkdir -p ${TEST}/$name
 fi
 
-mkdir -p ${TEST}/$name
+# Decoding
+echo "Testing $name, epoch: $ep"
+test_name=$TEST/$name/test-$ep
+python3 $CHAINN/nmt.py --init_model ${model_out}-$ep $gpu $decoder_options < ${data}/test.en --align_out ${test_name}.align > ${test_name}.out 2> ${test_name}.log
 
-python3 script/calculate-time.py $LOG/${name}.log $TEST/$name
-for (( tc=0; tc < $epoch; tc++ )) do
-    if [ -e ${model_out}-$tc ]; then
-        echo "Testing $name, epoch: $tc"
-        test_name=$TEST/$name/test-$tc
-        python3 $CHAINN/nmt.py --init_model ${model_out}-$tc $gpu $decoder_options < ${data}/test.en --align_out ${test_name}-single.align > ${test_name}-single.out 2> ${test_name}-single.log
-        $BLEU_EVALUATOR -lc ${data}/test.ja < ${test_name}-single.out > ${test_name}.result
-    fi
-done
+if [ ! -z $TM ]; then
+    python3 script/post-process/replace_unk.py -s $data/test.en -a ${test_name}.align -p $TM > ${test_name}.out
+fi
 
-source script/progress-bleu.sh $TEST/$name > $TEST/$name/test.report
+# BLEU
+$BLEU_EVALUATOR -lc ${data}/test.ja < ${test_name}.out > ${test_name}.result
+
+#python3 script/calculate-time.py $LOG/${name}.log $TEST/$name
+source script/progress-bleu.sh $model_out $TEST/$name > $TEST/$name/test.report
+

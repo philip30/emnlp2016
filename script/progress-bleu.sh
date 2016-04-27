@@ -10,9 +10,9 @@ if [[ $dir == "" ]];then
     exit 1
 fi
 
-for (( tc=0; tc < $EPOCH; tc++ )); do
-    if [ -e $1/test-$tc.result ]; then
+for (( tc=0; tc < $max_epoch; tc++ )); do
+    if [ -e $2/test-$tc.result ]; then
         let "k=$tc+1"
-        printf "Epoch %02d: %20s %s\n" $k "`cat $1/test-$tc.result`" "`cat $1/test-$tc.time`"
+        printf "Epoch %02d: %20s %s\n" $k "`cat $2/test-$tc.result`" "`cat $1-$tc/train.time`"
     fi
 done
