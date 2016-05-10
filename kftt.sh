@@ -25,6 +25,7 @@ start_epoch=$2
 DEV=""
 decoder_options="--verbose --eos_disc 0.3"
 max_epoch=30
+BATCH_SIZE=80
 
 mkdir -p $LOG
 mkdir -p $MODEL_OUT
@@ -33,8 +34,8 @@ TM=$ROOT/tm/kyoto/src_given_trg.lex
 DICT=$ROOT/tm/kyoto/trg_given_src.lex
 for (( ep=$start_epoch; ep < $max_epoch; ep++ )); do
 for model in attn dictattn; do
-for hidden in 256; do
-for depth in 1; do
+for hidden in 256 512 1024; do
+for depth in 1 2 4; do
     src_train=$DATA/kftt/kyoto-train.cln.en
     trg_train=$DATA/kftt/kyoto-train.cln.ja
     name=$model-h${hidden}-d${depth}
@@ -50,7 +51,7 @@ for depth in 1; do
         # Training
         source $ROOT/script/bash/training.sh
         # Testing
-        source $ROOTscript/bash/testing.sh
+        source $ROOT/script/bash/testing.sh
     fi
     done
 done

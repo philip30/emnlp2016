@@ -33,9 +33,9 @@ for split in 001 002 004 008 016 032 064 128; do
 TM=tm/btec/tm-$split/lex/src_given_trg.lex
 DICT=$ROOT/tm/btec/tm-$split/lex/trg_given_src.lex
 for (( ep=$start_epoch; ep < $max_epoch; ep++ )); do
-for model in dictattn; do
-for hidden in 256; do
-for depth in 1; do
+for model in attn dictattn; do
+for hidden in 1024; do
+for depth in 4 2 1; do
     src_train=$DATA/btec/train-${split}.clean.en
     trg_train=$DATA/btec/train-${split}.clean.ja
     name=$model-h${hidden}-d${depth}-$split
