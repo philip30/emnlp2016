@@ -25,5 +25,5 @@ lexicon() {
     done
 }
 
-#data
+data
 lexicon

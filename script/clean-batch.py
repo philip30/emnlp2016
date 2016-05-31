@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # arg1: SRC
 # arg2: TRG
 # arg3: SRC_OUT
@@ -12,7 +12,8 @@ from collections import defaultdict
 
 short_threshold = int(sys.argv[5])
 def short_enough(sent):
-    return len(sent.split()) <= short_threshold
+    l = len(sent.split())
+    return l <= short_threshold and l != 0
 
 data = []
 with open(sys.argv[1]) as src_fp:
