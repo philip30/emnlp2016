@@ -21,25 +21,25 @@ pbmt() {
     TEST=$ROOT/test/pbmt/$method
 
     #### Train
-#    # Build Translation model
-#    SECONDS=0
-#    mkdir -p `dirname $TM`
-#    $MOSES/scripts/training/train-model.perl -root-dir $TM -corpus $train -f $src -e $trg -alignment grow-diag-final-and -lm 0:5:$PWD/lm/$method/lm.blm:8 -external-bin-dir $GIZA -cores $THREADS
-#    train_time=$SECONDS
-#
-#    #### Tune
-#    SECONDS=0
-#    mkdir -p `dirname $TUNE`
-#    $MOSES/scripts/training/mert-moses.pl ${dev}.$src ${dev}.$trg $MOSES/bin/moses $TM/model/moses.ini --mertdir $MOSES/bin --working-dir $TUNE --decoder-flags "-threads $THREADS"
-#    duration=$SECONDS
-#    tune_time=$SECONDS
+    # Build Translation model
+    SECONDS=0
+    mkdir -p `dirname $TM`
+    $MOSES/scripts/training/train-model.perl -root-dir $TM -corpus $train -f $src -e $trg -alignment grow-diag-final-and -lm 0:5:$PWD/lm/$method/lm.blm:8 -external-bin-dir $GIZA -cores $THREADS
+    train_time=$SECONDS
+
+    #### Tune
+    SECONDS=0
+    mkdir -p `dirname $TUNE`
+    $MOSES/scripts/training/mert-moses.pl ${dev}.$src ${dev}.$trg $MOSES/bin/moses $TM/model/moses.ini --mertdir $MOSES/bin --working-dir $TUNE --decoder-flags "-threads $THREADS"
+    duration=$SECONDS
+    tune_time=$SECONDS
     
     #### Writing time
-#    perl -le 'printf "LM: %f\n", $ARGV[0]/60' $lm_time    >  $TUNE/train-time.detail
-#    perl -le 'printf "TM: %f\n", $ARGV[0]/60' $train_time >> $TUNE/train-time.detail
-#    perl -le 'printf "PL: %f\n", $ARGV[0]/60' $tune_time  >> $TUNE/train-time.detail
-#    perl -le 'printf "%f\n", ($ARGV[0]+$ARGV[1]+$ARGV[2])/60' $lm_time $train_time $tune_time > $TUNE/train.time
-#
+    perl -le 'printf "LM: %f\n", $ARGV[0]/60' $lm_time    >  $TUNE/train-time.detail
+    perl -le 'printf "TM: %f\n", $ARGV[0]/60' $train_time >> $TUNE/train-time.detail
+    perl -le 'printf "PL: %f\n", $ARGV[0]/60' $tune_time  >> $TUNE/train-time.detail
+    perl -le 'printf "%f\n", ($ARGV[0]+$ARGV[1]+$ARGV[2])/60' $lm_time $train_time $tune_time > $TUNE/train.time
+
     #### TEST   
     mkdir -p $TEST
     $MOSES/bin/moses -f $TUNE/moses.ini -threads $THREADS < ${test}.${src} > $TEST/test.out
@@ -58,5 +58,5 @@ kftt(){
     pbmt kftt $DATA/kftt/kyoto-train.clean $DATA/kftt/kyoto-dev $DATA/kftt/test en ja
 }
 
-#btec
+btec
 kftt

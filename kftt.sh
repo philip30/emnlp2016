@@ -21,10 +21,9 @@ start_epoch=$2
 [ -z $start_epoch ] && start_epoch=0
 ########
 
-max_epoch=15
+max_epoch=14
 BATCH_SIZE=64
 DROPOUT=0.2
-REPLACE_ONLY=true
 
 ### Training options
 training_options="--seed $SEED --batch $BATCH_SIZE $gpu --unk_cut 3 --dropout $DROPOUT"

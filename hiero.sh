@@ -34,6 +34,7 @@ hiero() {
     mkdir -p `dirname $TM`
     $TRAVATAR/script/train/train-travatar.pl --src_file $train_en --trg_file $train_ja --travatar_dir $TRAVATAR --bin_dir $GIZA --threads $THREADS --lm_file lm/$method/lm.blm --work_dir $TM --method hiero        
     train_time=$SECONDS
+    mv $TM/lex/* $TM
 
     #### Tune
     SECONDS=0
@@ -55,17 +56,14 @@ hiero() {
 
 }
 
-
 btec() {
     # BTEC Hiero
-    for split in 001; do
-        hiero btec-$split $DATA/btec/train-$split.clean.{en,ja} $DATA/btec/dev.{en,ja} $DATA/btec/test.{en,ja}
-    done
+    hiero btec $DATA/btec/train-001.clean.{en,ja} $DATA/btec/dev.{en,ja} $DATA/btec/test.{en,ja}
 }
 
 kftt(){
     hiero kftt $DATA/kftt/kyoto-train.clean.{en,ja} $DATA/kftt/kyoto-dev.{en,ja} $DATA/kftt/test.{en,ja}
 }
 
-#btec
+btec
 kftt

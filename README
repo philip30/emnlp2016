@@ -1,0 +1,37 @@
+## Lexicon - Experiment ##
+#### Preparation
+1. Extract the code and the data:
+    $ tar -xvzf data.tar.gz   
+    $ tar -xvzf chainn.tar.gz
+
+2. Install all third party software:
+    - Moses    : http://www.statmt.org/moses/                   # PBMT
+    - GIZA++   : https://github.com/moses-smt/giza-pp           # Word Alignment
+    - Travatar : http://www.phontron.com/travatar/              # Hiero
+    - Chainer  : http://chainer.org/                            # Neural Network Toolkit
+    - MTEval   : https://github.com/odashi/mteval               # Evaluator to calculate NIST and BLEU
+
+3. Copy the script/bash/config-run.sh script/bash/config.sh
+    $ cp script/bash/config-run.sh script/bash/config.sh
+
+4. Open config.sh and resolve all the dependencies there!
+    $ vi script/bash/config.sh
+
+5. Run prepare.sh, this will create the filtered data and will extract lexical probability from eijiro
+    $ ./prepare.sh
+
+##### Execution
+6. For convenience, you need to run the baseline experiment first because we will use the lexical translation probabilities
+   produced from them:
+    $ ./hiero.sh
+    $ ./pbmt.sh
+
+7. Let's make the hybrid lexicon first!
+    $ ./script/hybrid.sh    
+
+8. Once we have lexicons, you can reproduce the experiments by running btec.sh and kftt.sh:
+    $ ./btec.sh
+    $ ./kftt.sh
+
+That's it. You can find the result in test/$experiment/$method/test-13.{out,align,result,nist.result}
+Enjoy :)
