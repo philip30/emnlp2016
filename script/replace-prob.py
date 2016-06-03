@@ -22,10 +22,10 @@ coverage = (len(automatic) - len(uncovered)) / len(automatic)
 print("Coverage:", coverage, file=sys.stderr)
 
 # replacing
-for src in handmade:
-    if src in automatic:
-        automatic[src] = handmade[src]
+for src in automatic:
+    if src in handmade:
+        handmade[src] = automatic[src]
 
-for src, trg_prob in sorted(automatic.items()):
+for src, trg_prob in sorted(handmade.items()):
     for trg, prob in sorted(trg_prob.items()):
         print("%s %s %f" % (trg, src, prob))

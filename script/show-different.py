@@ -25,9 +25,9 @@ assert(len(out) == len(base) == len(ref) == len(src))
 for i, (out_l,  base_l, ref_l, src_l) in enumerate(zip(out, base, ref, src)):
     if base_l != out_l:
         print("Example  &", (i+1), "\\\\ \\hline")
-        print("src      &", src_l, "\\\\")
-        print("proposed &", out_l, "\\\\")
-        print("baseline &", base_l, "\\\\")
-        print("ref      &", ref_l, "\\\\")
+        print("input    &", src_l, "\\\\")
+        print("output   &", ref_l, "\\\\")
+        print("attn     &", base_l, "\\\\")
+        print("bias-trn &", out_l, "\\\\")
         print("===================================================")
 

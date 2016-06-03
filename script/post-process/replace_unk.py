@@ -38,7 +38,10 @@ word_prob = {}
 word_dct  = {}
 with open(args.lex) as lex_fp:
     for line in lex_fp:
-        src, trg, prob = line.strip().split()
+        try :
+            trg, src, prob = line.strip().split()
+        except:
+            continue
         prob = float(prob)
         if src not in word_prob or word_prob[src] < prob:
             word_prob[src] = prob

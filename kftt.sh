@@ -6,7 +6,6 @@ set -o xtrace
 experiment=kftt
 
 source script/bash/config.sh
-source script/bash/hyper-param.sh
 
 ### GPU ###
 gpu=$1
@@ -25,6 +24,7 @@ start_epoch=$2
 max_epoch=15
 BATCH_SIZE=64
 DROPOUT=0.2
+REPLACE_ONLY=true
 
 ### Training options
 training_options="--seed $SEED --batch $BATCH_SIZE $gpu --unk_cut 3 --dropout $DROPOUT"
@@ -43,20 +43,20 @@ for depth in 4; do
     name=$model-h${hidden}-d${depth}
     if [ $model = "dictattn" ]; then
         for DICT_METHOD in bias linear; do
-            for dict in kftt eijiro eigiz hyb; do
-                if [ $dict = "kftt" ]; then
+            for dict in auto man hyb; do
+                if [ $dict = "auto" ]; then
                     name=${model}_${DICT_METHOD}-h${hidden}-d${depth}
                     DICT=$ROOT/tm/kftt/trg_given_src.lex
-                    TM=$ROOT/tm/kftt/src_given_trg.lex
-                elif [ $dict = "eijiro" ]; then
+                elif [ $dict = "man" ]; then
                     name=${model}_${DICT_METHOD}_eijiro-h${hidden}-d${depth}
                     DICT=$ROOT/tm/eijiro/trg_given_src.lex
-                    TM=$ROOT/tm/eijiro/src_given_trg.lex
                 elif [ $dict = "hyb" ]; then
                     name=${model}_${DICT_METHOD}_hyb-h${hidden}-d${depth}
                     DICT=$ROOT/tm/hyb/kftt-trg_given_src.lex
-                    TM=$ROOT/tm/hyb/kftt-src_given_trg.lex
-                fi
+                else
+                    echo "Unrecognized lexicon: $dict"
+                    exit 1
+                fi 
                 # Training
                 source $ROOT/script/bash/training.sh
                 # Testing
@@ -64,6 +64,7 @@ for depth in 4; do
             done
         done
     else
+        DICT=$ROOT/tm/kftt/trg_given_src.lex
         # Training
         source $ROOT/script/bash/training.sh
         # Testing
