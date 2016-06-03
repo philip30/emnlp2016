@@ -1,8 +1,8 @@
-
-# The root of the experiment ($PWD?)
+### Instruction: Fill in all the !!
+# The root of the experiment [recommended: $PWD ] !!
 ROOT=
 
-# Path to chainn (up one level) directory (+ your PYTHONPATH) [recommended: $PWD] !!
+# Path to chainn (the code for this submission) up one level directory [recommended: $PWD] !!
 PYTHONPATH=
 
 # Path to chainn directory (absolute directory) [recommended: $PWD/chainn] !!
@@ -15,13 +15,12 @@ TRAVATAR=
 MOSES=
 ### GIZA++ !!
 GIZA=
-
-# Path to MOSES multi-bleu.perl !!
-BLEU_EVALUATOR=$HOME/mosesdecoder/scripts/generic/multi-bleu.perl
-# Path to mt-eval !!
+### MT_EVAL !!
 MT_EVAL=$HOME/mteval/src/bin/mteval-corpus
 
 ##### NO NEED TO CHANGE #######
+BLEU_EVALUATOR=$MOSES/scripts/generic/multi-bleu.perl
+
 # DATA
 DATA=$ROOT/data
 MODEL_OUT=$ROOT/model/$experiment
